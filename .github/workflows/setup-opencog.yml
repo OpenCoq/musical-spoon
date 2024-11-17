@@ -1,0 +1,53 @@
+name: Setup OpenCog
+
+on:
+  push:
+    branches:
+      - main  # Run this workflow on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Run on pull requests to the main branch
+
+jobs:
+  build-opencog:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu image
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Step 2: Update and install prerequisites
+      - name: Update system and install prerequisites
+        run: |
+          sudo apt update && sudo apt upgrade -y
+          sudo apt install -y git cmake build-essential libboost-all-dev guile-2.2-dev libsdl-dev
+
+      # Step 3: Clone the OpenCog repository
+      - name: Clone OpenCog repository
+        run: |
+          git clone https://github.com/opencog/opencog.git
+          cd opencog
+
+      # Step 4: Build OpenCog
+      - name: Build OpenCog
+        run: |
+          cd opencog
+          mkdir -p build
+          cd build
+          cmake ..
+          make -j$(nproc)
+
+      # Step 5: Run OpenCog server
+      - name: Start OpenCog server
+        run: |
+          cd opencog/build
+          ./opencog/server/cogserver &
+        env:
+          DISPLAY: ":99"
+
+      # Step 6: Run basic tests (optional)
+      - name: Run OpenCog tests
+        run: |
+          cd opencog/build
+          make test
