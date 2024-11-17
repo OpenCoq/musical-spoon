@@ -32,14 +32,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - language: 'c-cpp'
-          - language: 'csharp'
-          - language: 'go'
-          - language: 'java-kotlin'
+#          - language: 'c-cpp'
+#          - language: 'csharp'
+#          - language: 'go'
+#          - language: 'java-kotlin'
           - language: 'javascript-typescript'
-          - language: 'python'
-          - language: 'ruby'
-          - language: 'swift'
+#          - language: 'python'
+#          - language: 'ruby'
+#          - language: 'swift'
         # CodeQL supports the following language keywords: 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin, or both
